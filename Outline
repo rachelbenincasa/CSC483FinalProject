@@ -1,1 +1,11 @@
+This projects goal is to build a text retrieval system that answers Jeopardy style questions by returning the correct 
+title of a relevant wiki article. What we want to do is design a generic search engine that takes in a natural
+language question as an input and returns the wiki article that is the best match to it.
 
+The input will be a natural language trivia question (ex. Which organization produces British certification marks
+like the Kitemark?)
+
+The output will be the title of a wikipedia article that correctly answers the question (ex. British Standards)
+
+The dataset we are using is a collection of 280,715 english wikipedia articles, where each article has a title 
+and a body of text. There are around 123 million tokens in the collection.
