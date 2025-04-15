@@ -13,6 +13,8 @@ and a body of text. There are around 123 million tokens in the collection.
 The steps we want to take are:
 
 1. Preprocessing - getting rid of stop words and punctuation, use spaCy to tokenize it
+- get title
+- if next piece of text is "redirect", continue, otherwise add it to the dataset
 
 2. Getting the most relevant answer (top 20), use td-idf
 
