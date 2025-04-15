@@ -31,5 +31,15 @@ class Jeopardy:
       'original_text': original_text,
       'cleaned_text': self.cleanup.text(original text)
     })
+
+
+    # method to call add_article for each article name and text
+    # need to go through each wiki-subset-files and call it for each one
+
+
+    # method to use td-idf and return the top 20 or so results
+
+
+    # method to use a language model to get the best result
       
 
