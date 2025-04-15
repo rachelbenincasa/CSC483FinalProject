@@ -48,4 +48,41 @@ class Tester:
             print("Catagory: ", key[0], "\nQuestion: ", key[1], "\nAnswer:",
                   self.query_answer[key], "\n\n\n")
 
+    '''
+    gets the accuracy and writes the results to a file
+    '''
+    def test_accuracy(self, ir_system):
+        correct = 0
+        count = 0
+        write = open("tester_output\\results-" + ir_system.name, 'w')
+        for key, value in self.query_answer.items():
+            count += 1
+            curr_string = 'Testing Query: ' + key[1] + '\n'
+            print(curr_string)
+            results = ir_system.run_query(key[1])
 
+            if results != self.query_answer[key]:
+                error_string = "\033[91mIncorrect Result\033[0m\n"
+                error_string += "Expected: " + self.query_answer[key]  + " "
+                error_string += "Got: " + results + "\n\n"
+
+                print(error_string)
+                curr_string += error_string
+            else:
+                curr_string += "PASSED\n\n"
+                correct += 1
+            write.write(curr_string)
+
+        print("==========================================")
+        print("Correct:", correct)
+        print("Incorrect:", count - correct)
+        print("Queries:", count)
+        print("Accuracy: " + str(correct/count) + "%")
+        print("==========================================")
+
+        write.write("==========================================\n")
+        write.write("Correct: " + str(correct) + "\n")
+        write.write("Incorrect: " + str(count - correct) + "\n")
+        write.write("Queries: " + str(count) + "\n")
+        write.write("Accuracy: " + str(correct/count) + "%\n")
+        write.write("==========================================\n")
