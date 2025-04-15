@@ -9,3 +9,13 @@ The output will be the title of a wikipedia article that correctly answers the q
 
 The dataset we are using is a collection of 280,715 english wikipedia articles, where each article has a title 
 and a body of text. There are around 123 million tokens in the collection.
+
+The steps we want to take are:
+
+1. Preprocessing - getting rid of stop words and punctuation, use spaCy to tokenize it
+
+2. Getting the most relevant answer (top 20), use td-idf
+
+3. Using the top 20 results, find the actual answer, use a language model (llama)
+
+4. Main method that prints out the results from the test file
