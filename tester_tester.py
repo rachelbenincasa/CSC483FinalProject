@@ -1,3 +1,10 @@
+'''
+Author: Cole Hersh
+Description: this script is designed to test the Tester class, which
+calculates the accuracy of an IR system by running all the queries
+in questions.txt and comparing the results to the answers in questions.txt
+'''
+
 from tester import Tester
 
 class IR:

@@ -1,7 +1,9 @@
 '''
 Author: Cole Hersh
 Description: this file compares the output of an IR System
-to the expected answer and calculates its accuracy
+to the expected answer and calculates its accuracy.
+The results are written to both the terminal and a file with a
+unique name so the results of different IR systems can be compared.
 '''
 
 
