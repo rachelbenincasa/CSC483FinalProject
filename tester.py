@@ -20,10 +20,11 @@ class Tester:
         self.setup()
         self.print_dict()
 
-    """
-    populates query_answer
-    """
+
     def setup(self):
+        """
+        populates query_answer
+        """
         file = open(self.file, "r")
         counter = 0
         cat = ""
@@ -42,18 +43,20 @@ class Tester:
                 self.query_answer[(cat, question)] = line
                 counter = 0
 
-    """
-    prints query_answer for testing purposes
-    """
+
     def print_dict(self):
+        """
+        prints query_answer for testing purposes
+        """
         for key, value in self.query_answer.items():
             print("Catagory: ", key[0], "\nQuestion: ", key[1], "\nAnswer:",
                   self.query_answer[key], "\n\n\n")
 
-    """
-    gets the accuracy and writes the results to a file
-    """
+
     def test_accuracy(self, ir_system):
+        """
+        gets the accuracy and writes the results to a file
+        """
         correct = 0
         count = 0
         write = open("tester_output\\results-" + ir_system.name, 'w')
