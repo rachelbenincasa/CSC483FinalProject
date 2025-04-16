@@ -1,28 +1,28 @@
-'''
+"""
 Author: Cole Hersh
 Description: this file compares the output of an IR System
 to the expected answer and calculates its accuracy.
 The results are written to both the terminal and a file with a
 unique name so the results of different IR systems can be compared.
-'''
+"""
 
 
 class Tester:
-    '''
+    """
     Sets up the globals
     query_answer - a dictionary where the key is a 2-tuple
     where the first element is the category and the 2nd is the question.
     The value is the answer
-    '''
+    """
     def __init__(self):
         self.query_answer = {}
         self.file = "questions.txt"
         self.setup()
         self.print_dict()
 
-    '''
+    """
     populates query_answer
-    '''
+    """
     def setup(self):
         file = open(self.file, "r")
         counter = 0
@@ -42,17 +42,17 @@ class Tester:
                 self.query_answer[(cat, question)] = line
                 counter = 0
 
-    '''
+    """
     prints query_answer for testing purposes
-    '''
+    """
     def print_dict(self):
         for key, value in self.query_answer.items():
             print("Catagory: ", key[0], "\nQuestion: ", key[1], "\nAnswer:",
                   self.query_answer[key], "\n\n\n")
 
-    '''
+    """
     gets the accuracy and writes the results to a file
-    '''
+    """
     def test_accuracy(self, ir_system):
         correct = 0
         count = 0
