@@ -13,9 +13,18 @@ and a body of text. There are around 123 million tokens in the collection.
 The steps we want to take are:
 
 1. Preprocessing - getting rid of stop words and punctuation, use spaCy to tokenize it
+- get title
+- if next piece of text is "redirect", continue, otherwise add it to the dataset
 
 2. Getting the most relevant answer (top 20), use td-idf
 
 3. Using the top 20 results, find the actual answer, use a language model (llama)
 
 4. Main method that prints out the results from the test file
+
+
+=======================================================================
+Question style
+line 1 - Question Catagory
+line 2 - Question
+line 3 - answer (should be a document title)
