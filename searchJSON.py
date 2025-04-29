@@ -34,7 +34,7 @@ class Search_JSON:
         writer.commit()
         print("Completed index")
 
-    def search_index(self, input):
+    def search_index(self, input, llm, cat, q):
         ix = open_dir("indexdir")
         og = OrGroup.factory(0.9)
 
@@ -57,12 +57,13 @@ class Search_JSON:
                     "original_title": hit["doc_name"],
                     "cleaned_text": hit["text"]
                 }
-                res_arr.append(recovered_doc)
+                res_arr.append(recovered_doc['original_title'])
             # for dict in res_arr:
             #     print(dict['original_title'])
-            return res_arr
+            llm_dict = {'Category' : cat, 'Question' : q, 'DocNames' : res_arr}
+            return llm.llm_process(str(llm_dict))
         
-    def search_all(self, jp):
+    def search_all(self, jp, llm):
         with open('questions.txt', 'r', encoding='utf-8') as f:
             lines = [line.strip() for line in f if line.strip()]
 
@@ -80,18 +81,24 @@ class Search_JSON:
             answers = [a.strip().lower() for a in
                         lines[i + 2].split('|')]  # support multiple answers
 
+            if("state of the art museum" in category.lower()) :
+                category = "state of the art museum"
+
             cat_str = ' '.join(jp.cleanup_text(category))
             q_str = ' '.join(jp.cleanup_text(question))
             query = cat_str + " " + q_str
             print("Query: " + query)
-            ans = self.search_index(query)
+            ans = self.search_index(query, llm, category, question)
+            ans = ans.strip('"')
+            ans = ans.strip("'")
 
-            for dict in ans:
-                if dict['original_title'].lower() in answers:
-                    hits += 1
-                    break
+            if ans.lower() in answers:
+                hits += 1
+                print(ans)
+            else:
+                print(ans + " is incorrect! Expecting " + str(answers))
             total += 1
-        print(f"\n Hit rate: {hits}/{total} = {hits / total:.2%}   TFIDF Returns top 20 results")
+        print(f"\n Hit rate: {hits}/{total} = {hits / total:.2%}   From LLM picking best title")
 
         # 53% for unfiltered question only
         # 56% for filtered question only
