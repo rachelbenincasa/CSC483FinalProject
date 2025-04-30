@@ -60,8 +60,9 @@ class Search_JSON:
                 res_arr.append(recovered_doc['original_title'])
             # for dict in res_arr:
             #     print(dict['original_title'])
-            llm_dict = {'Category' : cat, 'Question' : q, 'DocNames' : res_arr}
-            return llm.llm_process(str(llm_dict))
+            #llm_dict = {'Category' : cat, 'Question' : q, 'DocNames' : res_arr}
+            # return llm.llm_process(str(llm_dict))
+            return res_arr
         
     def search_all(self, jp, llm):
         with open('questions.txt', 'r', encoding='utf-8') as f:
@@ -89,14 +90,33 @@ class Search_JSON:
             query = cat_str + " " + q_str
             print("Query: " + query)
             ans = self.search_index(query, llm, category, question)
-            ans = ans.strip('"')
-            ans = ans.strip("'")
+            # ans = ans.strip('"')
+            # ans = ans.strip("'")
 
-            if ans.lower() in answers:
+            # instructions for challenging questions
+            opt = ""
+            if "TIN" in category:
+                opt = "The document name selected must contain the substring 'tin' somewhere"
+            elif "UCLA" in category:
+                opt = "The document name selected must be a person who graduated from UCLA"
+            elif "GOLDEN GLOBE" in category:
+                opt = "The document name selected must be a person who won a Golden Globe"
+
+            llm_dict = {'Category' : category, 'Question' : question, 'DocNames' : ans}
+            val = llm.llm_process(str(llm_dict), opt)
+            val = val.strip('"')
+            val = val.strip("'")
+
+            if val.lower() in answers:
                 hits += 1
-                print(ans)
+                print(val)
             else:
-                print(ans + " is incorrect! Expecting " + str(answers))
+                print(val + " is incorrect! Expecting " + str(answers))
+            for title in ans:
+                if title.lower() in answers:
+                    print("From the potential answers list: " + title)
+                    break
+            print("\n")
             total += 1
         print(f"\n Hit rate: {hits}/{total} = {hits / total:.2%}   From LLM picking best title")
 

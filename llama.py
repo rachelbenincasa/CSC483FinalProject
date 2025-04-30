@@ -8,14 +8,15 @@ class Llama:
         # connect to local server
         self.client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
-    def llm_process(self, val):
+    def llm_process(self, val, optimizer):
         completion = self.client.chat.completions.create(
             model = "NousResearch/Hermes-3-Llama-3.2-3B-GGUF",
             messages = [
                 {"role" : "system", "content" : ("Return one document name that is the best answer for the given Category and Question. "
                 "The format of the input is a dictionary with Category, Question, and DocNames "
                 "as the keys. The DocNames key has the associated value of document names in an array."
-                "You are only allowed to return one of the 20 document names present")},
+                "You are only allowed to return one of the 20 document names present " +
+                optimizer)},
                 {"role" : "user", "content" : val}
             ],
             #tempearture = 0.7,
