@@ -15,7 +15,7 @@ class Llama:
                 {"role" : "system", "content" : ("Return one document name that is the best answer for the given Category and Question. "
                 "The format of the input is a dictionary with Category, Question, and DocNames "
                 "as the keys. The DocNames key has the associated value of document names in an array."
-                "You are only allowed to return one of the 20 document names present " +
+                "You are only allowed to return one of the 20 document names present. " +
                 optimizer)},
                 {"role" : "user", "content" : val}
             ],

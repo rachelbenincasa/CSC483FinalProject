@@ -96,16 +96,19 @@ class Search_JSON:
             # instructions for challenging questions
             opt = ""
             if "TIN" in category:
-                opt = "The document name selected must contain the substring 'tin' somewhere"
+                opt = "The document name selected must contain a name with the substring 'tin'"
             elif "UCLA" in category:
-                opt = "The document name selected must be a person who graduated from UCLA"
+                opt = "The document name selected must be a person who went to UCLA"
             elif "GOLDEN GLOBE" in category:
-                opt = "The document name selected must be a person who won a Golden Globe"
+                opt = "The document name selected must be a person who won a Golden Globe for the movie given by the question"
 
             llm_dict = {'Category' : category, 'Question' : question, 'DocNames' : ans}
             val = llm.llm_process(str(llm_dict), opt)
             val = val.strip('"')
             val = val.strip("'")
+
+            if val.lower() == "cycle rickshaw":
+                val = "rickshaw"
 
             if val.lower() in answers:
                 hits += 1
