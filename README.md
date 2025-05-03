@@ -16,6 +16,8 @@ openAI, whoosh, SpaCy
 2. Use Lm Studio to download Llama language model Llama-3.1-8B
 3. Start server on Lm Studio to make LLM accessible
 4. Run llama.py
+Note: This will create a new directory called indexdir if it is not already present on your computer.
+This may take a few minutes to run since the dataset is so large.
 
    
 # The Probelem
