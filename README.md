@@ -23,19 +23,19 @@ This may take a few minutes to run since the dataset is so large.
    
 # The Probelem
 You are given:
-○ Wikipedia collection (280,715 articles; article == title + text)
-○ 100 questions
-● You have to retrieve the article (title) that is the answer to the question
-● Evaluation: % questions for which you get the correct answer (accuracy)
-● It is harder than it seems
-○ Your solution must be generic
-■ Don’t implement anything that is specific to the 100 questions
-■ It must work when the answer is any of the 280k articles
-○ Indexing 280k wikipedia articles is tricky
-■ ~123,221,423 tokens
-■ Preprocessing
-● Parsing the article
-● Tokenizing, stemming, and so on
-■ Do you index the whole thing?
-■ Lucene vs. your search engine
-○ Let’s look at the wikipedia articles
+○ Wikipedia collection (280,715 articles; article == title + text)  <br> 
+○ 100 questions  <br> 
+● You have to retrieve the article (title) that is the answer to the question  <br> 
+● Evaluation: % questions for which you get the correct answer (accuracy)  <br> 
+● It is harder than it seems  <br> 
+○ Your solution must be generic  <br> 
+■ Don’t implement anything that is specific to the 100 questions  <br> 
+■ It must work when the answer is any of the 280k articles  <br> 
+○ Indexing 280k wikipedia articles is tricky  <br> 
+■ ~123,221,423 tokens  <br> 
+■ Preprocessing  <br> 
+● Parsing the article  <br> 
+● Tokenizing, stemming, and so on  <br> 
+■ Do you index the whole thing?  <br> 
+■ Lucene vs. your search engine  <br> 
+○ Let’s look at the wikipedia articles  <br> 
