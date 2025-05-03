@@ -7,8 +7,10 @@ This is an IR system that uses a Jeopardy category and a question to find the an
 The result is the return title of the document that most likely has the answer.  The dataset is a subset
 of Wikipedia.  The report is attached to this repository as "CSC 483 Report.pdf".
 
-#Requirements to install
-openAI, whoosh, SpaCy
+# Requirements
+- openAI
+- whoosh
+- SpaCy
 
 
 # LLM Install and Use Instructions
