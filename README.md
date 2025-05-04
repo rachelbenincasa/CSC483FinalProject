@@ -1,5 +1,6 @@
 # CSC483FinalProject
 Names: Cole Hersh, Rachel Benincasa, Bronson Housmans, and Shayden Lowry
+
 Jeopardy
 
 # Project Details
@@ -18,6 +19,15 @@ of Wikipedia.  The report is attached to this repository as "CSC 483 Report.pdf"
 2. Use Lm Studio to download Llama language model Llama-3.1-8B
 3. Start server on Lm Studio to make LLM accessible
 4. Run llama.py
+
+llama.py is the main method, and calls jeopardy2.py and searchJSON.py to complete the program.
+
+The files that are needed are:
+- llama.py
+- jeopardy2.py
+- searchJSON.py
+- wiki-subset-files (folder containing the wikipedia article text)
+- questions.txt (the 100 questions we want to solve for this assignment)
    
 Note: This will create a new directory called indexdir if it is not already present on your computer.
 This may take a few minutes to run since the dataset is so large.
