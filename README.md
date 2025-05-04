@@ -33,7 +33,7 @@ Note: This will create a new directory called indexdir if it is not already pres
 This may take a few minutes to run since the dataset is so large.
 
    
-# The Probelem
+# The Problem
 You are given:
 ○ Wikipedia collection (280,715 articles; article == title + text)  <br> 
 ○ 100 questions  <br> 
