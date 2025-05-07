@@ -9,19 +9,34 @@ class Llama:
         self.client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
     def llm_process(self, val):
+        """
+        For input query we have the llm pick the best answer from the list of
+        20 possible answers returned by the tf-idf pass.
+        """
         completion = self.client.chat.completions.create(
-            model = "NousResearch/Hermes-3-Llama-3.2-3B-GGUF",
-            messages = [
-                {"role" : "system", "content" : ("Return one document name that is the best answer for the given Category and Question. "
-                "The format of the input is a dictionary with Category, Question, and DocNames "
-                "as the keys. The DocNames key has the associated value of document names in an array."
-                "You are only allowed to return one of the 20 document names present")},
-                {"role" : "user", "content" : val}
+            model="lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+            temperature=0.0,   # make results consistent
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a Jeopardy expert.  The user will give you a Python "
+                        "dict literal with keys 'Category', 'Question', and 'DocNames' "
+                        "(a list of exactly 20 strings).  Pick the single best answer for"
+                        "the given question "
+                        "from that DocNames list. Return only the answer you have chosen. "
+                        "Do not include any justification, contemplation, introduction, or any"
+                        "words that are not simply your top pick from the 20 provided possible answers"
+                        "any additional words that are not a single selection verbatim from the possible answers"
+                        "will result in a disqualification of your jeapordy attempt."
+                    )
+                },
+                {"role": "user", "content": val}
             ],
-            #tempearture = 0.7,
         )
 
-        return completion.choices[0].message.content
+        return completion.choices[0].message.content.strip()
+
 
 def main():
     llm = Llama()
