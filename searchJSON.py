@@ -6,6 +6,7 @@ from whoosh.fields import Schema, ID, TEXT
 from whoosh.qparser import QueryParser, OrGroup
 from whoosh.analysis import StemmingAnalyzer
 
+
 class Search_JSON:
     def __init__(self):
         self.schema = Schema(
@@ -25,7 +26,8 @@ class Search_JSON:
                 data = json.load(f)
             for item in data:
                 for key, value in item.items():
-                    arr_join = ' '.join(value['cleaned_text']).replace("\n", " ").strip()
+                    arr_join = ' '.join(value['cleaned_text']).replace("\n",
+                                                                       " ").strip()
                     writer.add_document(
                         doc_id=key,
                         doc_name=value['original_title'],
@@ -40,11 +42,11 @@ class Search_JSON:
 
         # Customize BM25F scoring
         custom_bm25f = scoring.BM25F(
-            k1=1.5,               # try tuning from 1.2 to 2.0
-            B=0.7,                # try tuning from 0.5 to 1.0
+            k1=1.5,  # try tuning from 1.2 to 2.0
+            B=0.7,  # try tuning from 0.5 to 1.0
             field_B={"text": 0.7, "doc_name": 0.3},
             field_boosts={"text": 1.2, "doc_name": 0.8}
-)
+        )
 
         with ix.searcher(weighting=custom_bm25f) as searcher:
             parser = QueryParser("text", ix.schema, group=og)
@@ -60,16 +62,15 @@ class Search_JSON:
                 res_arr.append(recovered_doc['original_title'])
             # for dict in res_arr:
             #     print(dict['original_title'])
-            #llm_dict = {'Category' : cat, 'Question' : q, 'DocNames' : res_arr}
-            # return llm.llm_process(str(llm_dict))
-            return res_arr
-        
+            llm_dict = {'Category': cat, 'Question': q, 'DocNames': res_arr}
+            return llm.llm_process(str(llm_dict))
+
     def search_all(self, jp, llm):
         with open('questions.txt', 'r', encoding='utf-8') as f:
             lines = [line.strip() for line in f if line.strip()]
 
         assert len(
-        lines) % 3 == 0, "File should have triplets of Category, Question, Answer"
+            lines) % 3 == 0, "File should have triplets of Category, Question, Answer"
 
         total = 0
         hits = 0
@@ -80,9 +81,9 @@ class Search_JSON:
             category = lines[i]
             question = lines[i + 1]
             answers = [a.strip().lower() for a in
-                        lines[i + 2].split('|')]  # support multiple answers
+                       lines[i + 2].split('|')]  # support multiple answers
 
-            if("state of the art museum" in category.lower()) :
+            if ("state of the art museum" in category.lower()):
                 category = "state of the art museum"
 
             cat_str = ' '.join(jp.cleanup_text(category))
@@ -90,38 +91,17 @@ class Search_JSON:
             query = cat_str + " " + q_str
             print("Query: " + query)
             ans = self.search_index(query, llm, category, question)
-            # ans = ans.strip('"')
-            # ans = ans.strip("'")
+            ans = ans.strip('"')
+            ans = ans.strip("'")
 
-            # instructions for challenging questions
-            opt = ""
-            if "TIN" in category:
-                opt = "The document name selected must contain a name with the substring 'tin'"
-            elif "UCLA" in category:
-                opt = "The document name selected must be a person who went to UCLA"
-            elif "GOLDEN GLOBE" in category:
-                opt = "The document name selected must be a person who won a Golden Globe for the movie given by the question"
-
-            llm_dict = {'Category' : category, 'Question' : question, 'DocNames' : ans}
-            val = llm.llm_process(str(llm_dict), opt)
-            val = val.strip('"')
-            val = val.strip("'")
-
-            if val.lower() == "cycle rickshaw":
-                val = "rickshaw"
-
-            if val.lower() in answers:
+            if ans.lower() in answers:
                 hits += 1
-                print(val)
+                print(ans)
             else:
-                print(val + " is incorrect! Expecting " + str(answers))
-            for title in ans:
-                if title.lower() in answers:
-                    print("From the potential answers list: " + title)
-                    break
-            print("\n")
+                print(ans + " is incorrect! Expecting " + str(answers))
             total += 1
-        print(f"\n Hit rate: {hits}/{total} = {hits / total:.2%}   From LLM picking best title")
+        print(
+            f"\n Hit rate: {hits}/{total} = {hits / total:.2%}   From LLM picking best title")
 
         # 53% for unfiltered question only
         # 56% for filtered question only
